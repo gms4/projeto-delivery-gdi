@@ -1,4 +1,3 @@
---povoamento pessoa
 
 INSERT INTO Pessoa(cpf, nome, nascimento, telefone, email, cep, rua, numero_casa) VALUES ('703','uiusu', to_date('18/06/1997', 'dd/mm/yy'), '40028922','uium@mail.com',  '5021', 'fulano de tal', 1);
 INSERT INTO Pessoa(cpf, nome, nascimento, telefone, email, cep, rua, numero_casa) VALUES ('4','bruna', to_date('17/06/1997', 'dd/mm/yy'), '40028922','bru@mail.com',  '50321', 'fulano de tal', 2);
@@ -11,6 +10,5 @@ INSERT INTO Pessoa(cpf, nome, nascimento, telefone, email, cep, rua, numero_casa
 INSERT INTO Pessoa(cpf, nome, nascimento, telefone, email, cep, rua, numero_casa) VALUES ('45','samuel', to_date('10/06/1997', 'dd/mm/yy'), '40028922','sam@mail.com',  '50321', 'fulano de tal', 9);
 INSERT INTO Pessoa(cpf, nome, nascimento, telefone, email, cep, rua, numero_casa) VALUES ('73','julia', to_date('09/06/1997', 'dd/mm/yy'), '40028922','ju@mail.com',  '50321', 'fulano de tal', 10);
 
---select * from (Pessoa)
 
---povoamento cliente
+select * from (Pessoa)
