@@ -1,5 +1,4 @@
 DROP TABLE Pessoa;
-DROP TABLE Entregador;
 
 CREATE TABLE Pessoa (
     cpf VARCHAR2(11) NOT NULL,
