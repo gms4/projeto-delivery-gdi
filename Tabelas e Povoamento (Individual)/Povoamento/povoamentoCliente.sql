@@ -1,3 +1,5 @@
+--povoamento Cliente
+
 INSERT INTO Cliente(dt_criacao_conta, cpf) VALUES ( to_date('15/06/1997', 'dd/mm/yy'),'1'); 
 INSERT INTO Cliente(dt_criacao_conta, cpf) VALUES ( to_date('16/06/1997', 'dd/mm/yy'),'2'); 
 INSERT INTO Cliente(dt_criacao_conta, cpf) VALUES ( to_date('17/06/1997', 'dd/mm/yy'),'3'); 
