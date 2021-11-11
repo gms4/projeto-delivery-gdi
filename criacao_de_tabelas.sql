@@ -1,7 +1,7 @@
 CREATE TABLE Cep(
     cep VARCHAR2(255) NOT NULL,
     rua VARCHAR2(255) NOT NULL,
-    numero NUMBER,
+    numero NUMBER NOT NULL,
     bairro VARCHAR2(255) NOT NULL,
     cidade VARCHAR2(255) NOT NULL,
     estado VARCHAR2(255) NOT NULL, 
@@ -41,15 +41,15 @@ CREATE TABLE Restaurante(
     cnpj VARCHAR2(14) NOT NULL,
     parceiro_cnpj VARCHAR2(14),
     nome VARCHAR2(255) NOT NULL,
-    cep VARCHAR2(255),
+    cep VARCHAR2(255) NOT NULL,
     CONSTRAINT restaurante_pk PRIMARY KEY (cnpj),
     CONSTRAINT restaurante_fk1 FOREIGN KEY (parceiro_cnpj) REFERENCES Restaurante(cnpj), --auto relacionamento parceiro
     CONSTRAINT restaurante_fk2 FOREIGN KEY (cep) REFERENCES Cep(cep)
 );
 
 CREATE TABLE Prato( --entidade fraca de restaurante
-    nome VARCHAR2(255),
-    cnpj VARCHAR2(14),
+    nome VARCHAR2(255) NOT NULL,
+    cnpj VARCHAR2(14) NOT NULL,
     preco NUMBER NOT NULL, --n existe almoço de graça
     categoria VARCHAR2(255),
     CONSTRAINT prato_pk PRIMARY KEY (nome, cnpj), 
@@ -78,9 +78,9 @@ CREATE TABLE Pedido_entregue( --entidade associativa
 );
 
 CREATE TABLE Pedido( --relacao
-    cliente_cpf VARCHAR2(11),
-    restaurante_cnpj VARCHAR2(14),
-    prato_nome VARCHAR2(255),
+    cliente_cpf VARCHAR2(11) NOT NULL,
+    restaurante_cnpj VARCHAR2(14) NOT NULL,
+    prato_nome VARCHAR2(255) NOT NULL,
     frete NUMBER,
     form_pgmt VARCHAR2(255),
     data_pedido DATE NOT NULL,
@@ -91,8 +91,8 @@ CREATE TABLE Pedido( --relacao
 
 CREATE TABLE Avalia(--relacao tripla
     entregador_cpf VARCHAR2(11),
-    cliente_cpf VARCHAR2(11),
-    restaurante_cnpj VARCHAR2(14),
+    cliente_cpf VARCHAR2(11) NOT NULL,
+    restaurante_cnpj VARCHAR2(14) NOT NULL,
     nota_c_e NUMBER CHECK (nota_c_e >= 1 AND nota_c_e <= 5), 
     nota_c_r NUMBER NOT NULL CHECK (nota_c_r >= 1 AND nota_c_r <= 5),
     nota_e_c NUMBER CHECK (nota_e_c >= 1 AND nota_e_c <= 5),
