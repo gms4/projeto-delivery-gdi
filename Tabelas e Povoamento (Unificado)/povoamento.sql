@@ -37,11 +37,11 @@ INSERT INTO Cliente(dt_criacao_conta, cpf) VALUES (to_date('14/06/2021', 'dd/mm/
 
 --povoamento entregador
 
-INSERT INTO Entregador (cpf, data_admissao, renda, veiculo, horario_inicio, horario_fim) VALUES ('6', to_date('01/12/2020', 'dd/mm/yy'), '1600', 'moto', 8, 18);
-INSERT INTO Entregador (cpf, data_admissao, renda, veiculo, horario_inicio, horario_fim) VALUES ('7', to_date('12/10/2020', 'dd/mm/yy'), '1700', 'bicicleta', 8, 18);
-INSERT INTO Entregador (cpf, data_admissao, renda, veiculo, horario_inicio, horario_fim) VALUES ('8', to_date('30/03/2021', 'dd/mm/yy'), '1800', 'skate', 8, 18);
-INSERT INTO Entregador (cpf, data_admissao, renda, veiculo, horario_inicio, horario_fim) VALUES ('9', to_date('21/02/2021', 'dd/mm/yy'), '1900', 'patinete elétrico', 8, 18);
-INSERT INTO Entregador (cpf, data_admissao, renda, veiculo, horario_inicio, horario_fim) VALUES ('10', to_date('01/12/2020', 'dd/mm/yy'), '2000', 'patinete', 8, 18);
+INSERT INTO Entregador (cpf, data_admissao, renda, veiculo) VALUES ('6', to_date('01/12/2020', 'dd/mm/yy'), '1600', 'moto');
+INSERT INTO Entregador (cpf, data_admissao, renda, veiculo) VALUES ('7', to_date('12/10/2020', 'dd/mm/yy'), '1700', 'bicicleta');
+INSERT INTO Entregador (cpf, data_admissao, renda, veiculo) VALUES ('8', to_date('30/03/2021', 'dd/mm/yy'), '1800', 'skate');
+INSERT INTO Entregador (cpf, data_admissao, renda, veiculo) VALUES ('9', to_date('21/02/2021', 'dd/mm/yy'), '1900', 'patinete elétrico');
+INSERT INTO Entregador (cpf, data_admissao, renda, veiculo) VALUES ('10', to_date('01/12/2020', 'dd/mm/yy'), '2000', 'patinete');
 
 --povoamento restaurante
 
@@ -57,6 +57,7 @@ INSERT INTO Prato(nome, cnpj, preco, categoria) VALUES ('Filé a Parmegiana', '1
 INSERT INTO Prato(nome, cnpj, preco, categoria) VALUES ('Casquinha de Siri', '11829348569787', '9.90', 'petisco');
 INSERT INTO Prato(nome, cnpj, preco, categoria) VALUES ('Temaki Philadelphia', '11829348569785', '18.90', 'temakis');
 INSERT INTO Prato(nome, cnpj, preco, categoria) VALUES ('Azedinho', '11829348569789', '0.15', 'doces');
+INSERT INTO Prato(nome, cnpj, preco, categoria) VALUES ('Picanha Nobre ao Molho Quatro Queijos', '11829348569787', '109.9', 'carnes');
 
 --povoamente telefones_restaurante
 
@@ -65,19 +66,19 @@ INSERT INTO Telefone_restaurante (cnpj, telefone) VALUES ('11829348569789', '342
 INSERT INTO Telefone_restaurante (cnpj, telefone) VALUES ('11829348569788', '44448888');
 INSERT INTO Telefone_restaurante (cnpj, telefone) VALUES ('11829348569788', '999097768');
 
---povoamento pedido_entregue
+/*--povoamento pedido
 
-INSERT INTO Pedido_entregue(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, 
-                frete, form_pgmt, data_pedido) VALUES ('1', '11829348569789', 'Azedinho', '6', 4.9, 'crédito', to_date('01/12/2020', 'dd/mm/yy')); 
+INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, horario_inicio, horario_fim,
+                frete, form_pgmt, data_pedido) VALUES ('1', '11829348569789', 'Azedinho', '6', 8, 9, 4.9, 'crédito', to_date('01/12/2020', 'dd/mm/yy')); 
 
-INSERT INTO Pedido_entregue(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, 
-                frete, form_pgmt, data_pedido) VALUES ('3', '11829348569785', 'Temaki Philadelphia', '7', 5.9, 'débito', to_date('12/10/2020', 'dd/mm/yy'));
+INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, horario_inicio, horario_fim, 
+                frete, form_pgmt, data_pedido) VALUES ('3', '11829348569785', 'Temaki Philadelphia', '7', 18, 19, 5.9, 'débito', to_date('12/10/2020', 'dd/mm/yy'));
             
-INSERT INTO Pedido_entregue(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, 
-                frete, form_pgmt, data_pedido) VALUES ('4', '11829348569787', 'Casquinha de Siri', '8', 0, 'pix', to_date('12/10/2021', 'dd/mm/yy'));
+INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, horario_inicio, horario_fim,
+                frete, form_pgmt, data_pedido) VALUES ('4', '11829348569787', 'Casquinha de Siri', '8', 18, 19, 0, 'pix', to_date('12/10/2021', 'dd/mm/yy'));
 
-INSERT INTO Pedido_entregue(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, 
-                frete, form_pgmt, data_pedido) VALUES ('1', '11829348569786', 'Filé a Parmegiana', '6', 4.9, 'dinheiro', to_date('01/12/2021', 'dd/mm/yy')); 
+INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, horario_inicio, horario_fim,
+                frete, form_pgmt, data_pedido) VALUES ('1', '11829348569786', 'Filé a Parmegiana', '6', 18, 19, 4.9, 'dinheiro', to_date('01/12/2021', 'dd/mm/yy')); 
 
 --povoamento pedido
 
@@ -91,7 +92,23 @@ INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome,
                 frete, form_pgmt, data_pedido) VALUES ('4', '11829348569787', 'Casquinha de Siri', 0, 'pix', to_date('12/10/2021', 'dd/mm/yy'));
 
 INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, 
-                frete, form_pgmt, data_pedido) VALUES ('1', '11829348569786', 'Filé a Parmegiana', 0, 'dinheiro', to_date('01/12/2021', 'dd/mm/yy')); 
+                frete, form_pgmt, data_pedido) VALUES ('1', '11829348569786', 'Filé a Parmegiana', 0, 'dinheiro', to_date('01/12/2021', 'dd/mm/yy'));*/
+
+--povoamento pedido
+
+INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, horario_inicio, horario_fim,
+                frete, form_pgmt, data_pedido) VALUES ('1', '11829348569789', 'Azedinho', '6', 8, 9, 4.9, 'crédito', to_date('01/12/2020', 'dd/mm/yy')); 
+
+INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, horario_inicio, horario_fim, 
+                frete, form_pgmt, data_pedido) VALUES ('3', '11829348569785', 'Temaki Philadelphia', '7', 18, 19, 5.9, 'débito', to_date('12/10/2020', 'dd/mm/yy'));
+            
+INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, horario_inicio, horario_fim,
+                frete, form_pgmt, data_pedido) VALUES ('4', '11829348569787', 'Casquinha de Siri', '8', 18, 19, 0, 'pix', to_date('12/10/2021', 'dd/mm/yy'));
+
+INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, horario_inicio, horario_fim,
+                frete, form_pgmt, data_pedido) VALUES ('1', '11829348569786', 'Filé a Parmegiana', '6', 18, 19, 4.9, 'dinheiro', to_date('01/12/2021', 'dd/mm/yy'));
+INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, horario_inicio, horario_fim,
+                frete, form_pgmt, data_pedido) VALUES ('5', '11829348569787', 'Picanha Nobre ao Molho Quatro Queijos', '', '', '', 0, 'crédito', to_date('01/12/2021', 'dd/mm/yy'));
 
 --povoamento avalia
 
@@ -103,3 +120,13 @@ INSERT INTO Avalia(entregador_cpf, cliente_cpf, restaurante_cnpj,
         nota_c_e, nota_c_r, nota_e_c, nota_r_e) VALUES ('8', '4', '11829348569787', 5, 2, 5, 5);
 INSERT INTO Avalia(entregador_cpf, cliente_cpf, restaurante_cnpj, 
         nota_c_e, nota_c_r, nota_e_c, nota_r_e) VALUES ('6', '1', '11829348569786', 3, 2, 4, 1);
+
+select * from (Cep);
+select * from (Pessoa);
+select * from (Cliente);
+select * from (Entregador);
+select * from (Restaurante);
+select * from (Prato);
+select * from (Telefone_restaurante);
+select * from (Pedido);
+select * from (Avalia);

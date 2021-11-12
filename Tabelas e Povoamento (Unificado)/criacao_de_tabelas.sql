@@ -29,10 +29,8 @@ CREATE TABLE Cliente( --herda de pessoa
 CREATE TABLE Entregador ( --herda de pessoa
     cpf VARCHAR2(11) NOT NULL, 
     data_admissao DATE NOT NULL, 
-    renda NUMBER CHECK (renda >= 1100.00), --abaixo do salario mínino no nosso app não
-    veiculo VARCHAR2(255), 
-    horario_inicio NUMBER,
-    horario_fim NUMBER,
+    renda NUMBER NOT NULL CHECK (renda >= 1100.00), --abaixo do salario mínino no nosso app não
+    veiculo VARCHAR2(255) NOT NULL, 
     CONSTRAINT entregador_pk PRIMARY KEY (cpf), 
     CONSTRAINT entregador_fk FOREIGN KEY (cpf) REFERENCES Pessoa(cpf)
 );
@@ -63,18 +61,20 @@ CREATE TABLE Telefone_restaurante ( --tabela para telefones (multi) do restauran
     CONSTRAINT telefone_restaurante_fk FOREIGN KEY (cnpj) REFERENCES Restaurante(cnpj)
 );
 
-CREATE TABLE Pedido_entregue( --entidade associativa
+/*CREATE TABLE Pedido_entregue( --entidade associativa
     cliente_cpf VARCHAR2(11) NOT NULL,
     restaurante_cnpj VARCHAR2(14) NOT NULL,
     prato_nome VARCHAR2(255) NOT NULL,
     entregador_cpf VARCHAR2(11) NOT NULL,
+    horario_inicio NUMBER NOT NULL,
+    horario_fim NUMBER NOT NULL,
     frete NUMBER NOT NULL,
     form_pgmt VARCHAR2(255) NOT NULL,
     data_pedido DATE NOT NULL,
-    CONSTRAINT pedido_entregue_pk PRIMARY KEY (cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf),
-    CONSTRAINT pedido_entregue_fk1 FOREIGN KEY (cliente_cpf) REFERENCES Cliente(cpf),
-    CONSTRAINT pedido_entregue_fk2 FOREIGN KEY (prato_nome, restaurante_cnpj) REFERENCES Prato(nome, cnpj),
-    CONSTRAINT pedido_entregue_fk3 FOREIGN KEY (entregador_cpf) REFERENCES Entregador(cpf)
+    CONSTRAINT pedido_pk PRIMARY KEY (cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf),
+    CONSTRAINT pedido_fk1 FOREIGN KEY (cliente_cpf) REFERENCES Cliente(cpf),
+    CONSTRAINT pedido_fk2 FOREIGN KEY (prato_nome, restaurante_cnpj) REFERENCES Prato(nome, cnpj),
+    CONSTRAINT pedido_fk3 FOREIGN KEY (entregador_cpf) REFERENCES Entregador(cpf)
 );
 
 CREATE TABLE Pedido( --relacao
@@ -87,16 +87,32 @@ CREATE TABLE Pedido( --relacao
     CONSTRAINT pedido__pk PRIMARY KEY (cliente_cpf, restaurante_cnpj, prato_nome),
     CONSTRAINT pedido_fk1 FOREIGN KEY (cliente_cpf) REFERENCES Cliente(cpf),
     CONSTRAINT pedido_fk2 FOREIGN KEY (prato_nome, restaurante_cnpj) REFERENCES Prato(nome, cnpj)
+);*/
+
+CREATE TABLE Pedido( --entidade associativa
+    cliente_cpf VARCHAR2(11) NOT NULL,
+    restaurante_cnpj VARCHAR2(14) NOT NULL,
+    prato_nome VARCHAR2(255) NOT NULL,
+    entregador_cpf VARCHAR2(11),
+    horario_inicio NUMBER,
+    horario_fim NUMBER,
+    frete NUMBER NOT NULL,
+    form_pgmt VARCHAR2(255) NOT NULL,
+    data_pedido DATE NOT NULL,
+    CONSTRAINT pedido_pk PRIMARY KEY (cliente_cpf, restaurante_cnpj, prato_nome),
+    CONSTRAINT pedido_fk1 FOREIGN KEY (cliente_cpf) REFERENCES Cliente(cpf),
+    CONSTRAINT pedido_fk2 FOREIGN KEY (prato_nome, restaurante_cnpj) REFERENCES Prato(nome, cnpj),
+    CONSTRAINT pedido_fk3 FOREIGN KEY (entregador_cpf) REFERENCES Entregador(cpf)
 );
 
 CREATE TABLE Avalia(--relacao tripla
     entregador_cpf VARCHAR2(11),
     cliente_cpf VARCHAR2(11) NOT NULL,
     restaurante_cnpj VARCHAR2(14) NOT NULL,
-    nota_c_e NUMBER CHECK (nota_c_e >= 1 AND nota_c_e <= 5), 
-    nota_c_r NUMBER NOT NULL CHECK (nota_c_r >= 1 AND nota_c_r <= 5),
-    nota_e_c NUMBER CHECK (nota_e_c >= 1 AND nota_e_c <= 5),
-    nota_r_e NUMBER CHECK (nota_r_e >= 1 AND nota_r_e <= 5),
+    nota_c_e NUMBER CHECK (nota_c_e >= 1 AND nota_c_e <= 5), --nota do cliente para o entregador
+    nota_c_r NUMBER NOT NULL CHECK (nota_c_r >= 1 AND nota_c_r <= 5), --nota do cliente para o restaurante
+    nota_e_c NUMBER CHECK (nota_e_c >= 1 AND nota_e_c <= 5), --nota do entregador para o cliente
+    nota_r_e NUMBER CHECK (nota_r_e >= 1 AND nota_r_e <= 5), --nota do restaurante para o entregador
     --CONSTRAINT avalia_pk PRIMARY KEY (entregador_cpf, cliente_cpf, restaurante_cnpj),
     CONSTRAINT avalia_fk1 FOREIGN KEY (entregador_cpf) REFERENCES Entregador(cpf),
     CONSTRAINT avalia_fk2 FOREIGN KEY (cliente_cpf) REFERENCES Cliente(cpf),
