@@ -1,6 +1,3 @@
-DROP TABLE Pessoa;
-DROP TABLE Entregador;
-
 CREATE TABLE Pessoa (
     cpf VARCHAR2(11) NOT NULL,
     nome VARCHAR2(255) NOT NULL,
@@ -8,7 +5,6 @@ CREATE TABLE Pessoa (
     telefone VARCHAR2(255) NOT NULL,
     email VARCHAR2(255) NOT NULL UNIQUE,
     cep VARCHAR2(255) NOT NULL,
-    rua VARCHAR2(255) NOT NULL,
-    numero_casa INTEGER NOT NULL,
-    CONSTRAINT pessoa_pk PRIMARY KEY (cpf)
+    CONSTRAINT pessoa_pk PRIMARY KEY (cpf),
+    CONSTRAINT pessoa_fk FOREIGN KEY (cep) REFERENCES Cep(cep)
 );
