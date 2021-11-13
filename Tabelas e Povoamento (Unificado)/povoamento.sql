@@ -45,11 +45,11 @@ INSERT INTO Entregador (cpf, data_admissao, renda, veiculo) VALUES ('10', to_dat
 
 --povoamento restaurante
 
-INSERT INTO Restaurante(cnpj, parceiro_cnpj, nome, cep) VALUES ('11829348569789', '', 'Cantina da Area 2', '50670901');
-INSERT INTO Restaurante(cnpj, parceiro_cnpj, nome, cep) VALUES ('11829348569788', '11829348569789', 'Brazzetus', '50741200');
-INSERT INTO Restaurante(cnpj, parceiro_cnpj, nome, cep) VALUES ('11829348569787', '11829348569788', 'Bode do Nô', '51021090');
-INSERT INTO Restaurante(cnpj, parceiro_cnpj, nome, cep) VALUES ('11829348569786', '', 'Pizzaria Atlântico', '50110727');
-INSERT INTO Restaurante(cnpj, parceiro_cnpj, nome, cep) VALUES ('11829348569785', '', 'Udon Cozinha Oriental', '52070020');
+INSERT INTO Restaurante(cnpj, nome, cep) VALUES ('11829348569789', 'Cantina da Area 2', '50670901');
+INSERT INTO Restaurante(cnpj, nome, cep) VALUES ('11829348569788', 'Brazzetus', '50741200');
+INSERT INTO Restaurante(cnpj, nome, cep) VALUES ('11829348569787', 'Bode do Nô', '51021090');
+INSERT INTO Restaurante(cnpj, nome, cep) VALUES ('11829348569786', 'Pizzaria Atlântico', '50110727');
+INSERT INTO Restaurante(cnpj, nome, cep) VALUES ('11829348569785', 'Udon Cozinha Oriental', '52070020');
 
 --povoamento prato
 
@@ -110,16 +110,24 @@ INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, ho
 INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, prato_nome, entregador_cpf, horario_inicio, horario_fim,
                 frete, form_pgmt, data_pedido) VALUES ('5', '11829348569787', 'Picanha Nobre ao Molho Quatro Queijos', '', '', '', 0, 'crédito', to_date('01/12/2021', 'dd/mm/yy'));
 
+--povoamento parceria
+
+INSERT INTO Parceria(cnpj_contratante, cnpj_contratado) VALUES ('11829348569789', '');
+INSERT INTO Parceria(cnpj_contratante, cnpj_contratado) VALUES ('11829348569788', '11829348569787');
+INSERT INTO Parceria(cnpj_contratante, cnpj_contratado) VALUES ('11829348569788', '11829348569786');
+INSERT INTO Parceria(cnpj_contratante, cnpj_contratado) VALUES ('11829348569785', '11829348569786');
+INSERT INTO Parceria(cnpj_contratante, cnpj_contratado) VALUES ('11829348569787', '11829348569788');
+
 --povoamento avalia
 
 INSERT INTO Avalia(entregador_cpf, cliente_cpf, restaurante_cnpj, 
-        nota_c_e, nota_c_r, nota_e_c, nota_r_e) VALUES ('6', '1', '11829348569789', 5, 5, 5, 5);
+        nota_c_e, nota_c_r, nota_r_e) VALUES ('6', '1', '11829348569789', 5, 5, 5);
 INSERT INTO Avalia(entregador_cpf, cliente_cpf, restaurante_cnpj, 
-        nota_c_e, nota_c_r, nota_e_c, nota_r_e) VALUES ('', '3', '11829348569785', '', 5, '', '');
+        nota_c_e, nota_c_r, nota_r_e) VALUES ('', '5', '11829348569787', '', 5, '');
 INSERT INTO Avalia(entregador_cpf, cliente_cpf, restaurante_cnpj, 
-        nota_c_e, nota_c_r, nota_e_c, nota_r_e) VALUES ('8', '4', '11829348569787', 5, 2, 5, 5);
+        nota_c_e, nota_c_r, nota_r_e) VALUES ('8', '4', '11829348569787', 5, 2, 5);
 INSERT INTO Avalia(entregador_cpf, cliente_cpf, restaurante_cnpj, 
-        nota_c_e, nota_c_r, nota_e_c, nota_r_e) VALUES ('6', '1', '11829348569786', 3, 2, 4, 1);
+        nota_c_e, nota_c_r, nota_r_e) VALUES ('6', '1', '11829348569786', 3, 2, 1);
 
 select * from (Cep);
 select * from (Pessoa);
@@ -129,4 +137,5 @@ select * from (Restaurante);
 select * from (Prato);
 select * from (Telefone_restaurante);
 select * from (Pedido);
+select * from (Parceria);
 select * from (Avalia);

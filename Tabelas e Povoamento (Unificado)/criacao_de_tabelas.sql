@@ -37,11 +37,9 @@ CREATE TABLE Entregador ( --herda de pessoa
 
 CREATE TABLE Restaurante(
     cnpj VARCHAR2(14) NOT NULL,
-    parceiro_cnpj VARCHAR2(14),
     nome VARCHAR2(255) NOT NULL,
     cep VARCHAR2(255) NOT NULL,
     CONSTRAINT restaurante_pk PRIMARY KEY (cnpj),
-    CONSTRAINT restaurante_fk1 FOREIGN KEY (parceiro_cnpj) REFERENCES Restaurante(cnpj), --auto relacionamento parceiro
     CONSTRAINT restaurante_fk2 FOREIGN KEY (cep) REFERENCES Cep(cep)
 );
 
@@ -49,14 +47,14 @@ CREATE TABLE Prato( --entidade fraca de restaurante
     nome VARCHAR2(255) NOT NULL,
     cnpj VARCHAR2(14) NOT NULL,
     preco NUMBER NOT NULL, --n existe almoço de graça
-    categoria VARCHAR2(255),
+    categoria VARCHAR2(255) NOT NULL,
     CONSTRAINT prato_pk PRIMARY KEY (nome, cnpj), 
     CONSTRAINT prato_fk FOREIGN KEY (cnpj) REFERENCES Restaurante(cnpj) 
 );
 
 CREATE TABLE Telefone_restaurante ( --tabela para telefones (multi) do restaurante 
     cnpj VARCHAR2(14) NOT NULL,
-    telefone VARCHAR2(255) UNIQUE NOT NULL,
+    telefone VARCHAR2(255) NOT NULL UNIQUE,
     CONSTRAINT telefone_restaurante_pk PRIMARY KEY (cnpj, telefone),
     CONSTRAINT telefone_restaurante_fk FOREIGN KEY (cnpj) REFERENCES Restaurante(cnpj)
 );
@@ -89,6 +87,13 @@ CREATE TABLE Pedido( --relacao
     CONSTRAINT pedido_fk2 FOREIGN KEY (prato_nome, restaurante_cnpj) REFERENCES Prato(nome, cnpj)
 );*/
 
+CREATE TABLE Parceria( --auto relacionamento
+    cnpj_contratante VARCHAR2(14) NOT NULL,
+    cnpj_contratado VARCHAR2(14),
+    CONSTRAINT parceria_fk1 FOREIGN KEY (cnpj_contratante) REFERENCES Restaurante(cnpj),
+    CONSTRAINT parceria_fk2 FOREIGN KEY (cnpj_contratado) REFERENCES Restaurante(cnpj)
+);
+
 CREATE TABLE Pedido( --entidade associativa
     cliente_cpf VARCHAR2(11) NOT NULL,
     restaurante_cnpj VARCHAR2(14) NOT NULL,
@@ -111,9 +116,7 @@ CREATE TABLE Avalia(--relacao tripla
     restaurante_cnpj VARCHAR2(14) NOT NULL,
     nota_c_e NUMBER CHECK (nota_c_e >= 1 AND nota_c_e <= 5), --nota do cliente para o entregador
     nota_c_r NUMBER NOT NULL CHECK (nota_c_r >= 1 AND nota_c_r <= 5), --nota do cliente para o restaurante
-    nota_e_c NUMBER CHECK (nota_e_c >= 1 AND nota_e_c <= 5), --nota do entregador para o cliente
     nota_r_e NUMBER CHECK (nota_r_e >= 1 AND nota_r_e <= 5), --nota do restaurante para o entregador
-    --CONSTRAINT avalia_pk PRIMARY KEY (entregador_cpf, cliente_cpf, restaurante_cnpj),
     CONSTRAINT avalia_fk1 FOREIGN KEY (entregador_cpf) REFERENCES Entregador(cpf),
     CONSTRAINT avalia_fk2 FOREIGN KEY (cliente_cpf) REFERENCES Cliente(cpf),
     CONSTRAINT avalia_fk3 FOREIGN KEY (restaurante_cnpj) REFERENCES Restaurante(cnpj)
