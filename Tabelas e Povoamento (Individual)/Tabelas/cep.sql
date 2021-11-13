@@ -1,0 +1,9 @@
+CREATE TABLE Cep(
+    cep VARCHAR2(255) NOT NULL,
+    rua VARCHAR2(255) NOT NULL,
+    numero NUMBER,
+    bairro VARCHAR2(255) NOT NULL,
+    cidade VARCHAR2(255) NOT NULL,
+    estado VARCHAR2(255) NOT NULL, 
+    CONSTRAINT cep_pk PRIMARY KEY (cep)
+);
