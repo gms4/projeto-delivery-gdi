@@ -22,7 +22,7 @@ ALTER SESSION SET NLS_TIMESTAMP_FORMAT='DD-MON-YY HH24:MI';
 ALTER TABLE Telefone_restaurante MODIFY (telefone VARCHAR2(11));
 
 --facilitando o acesso ao pedido
-CREATE INDEX indice_pedido ON Pedido(cliente_cpf, nome_prato);
+CREATE INDEX indice_pedido ON Pedido_contem_prato(cliente_cpf, nome_prato);
 
 --povoamento cep
 
