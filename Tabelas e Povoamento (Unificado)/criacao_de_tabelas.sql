@@ -35,8 +35,7 @@ CREATE TABLE Entregador ( --herda de pessoa
     CONSTRAINT entregador_pk PRIMARY KEY (cpf), 
     CONSTRAINT entregador_fk FOREIGN KEY (cpf) REFERENCES Pessoa(cpf)
 );
---frete > 0 -> pedido entregue
---frete = 0 -> pedido pego no local
+
 CREATE TABLE Restaurante(
     cnpj VARCHAR2(14) NOT NULL,
     nome VARCHAR2(255) NOT NULL,
