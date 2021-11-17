@@ -24,7 +24,7 @@ ALTER TABLE Telefone_restaurante MODIFY (telefone VARCHAR2(11));
 --facilitando o acesso ao pedido
 CREATE INDEX indice_pedido ON Pedido_contem_prato(cliente_cpf, nome_prato);
 
---povoamento cep
+--povoamento endereço
 
 INSERT INTO Endereco(cep, rua, numero, bairro, cidade, estado) VALUES ('51900210', 'rua cachorro nogueira', 1, 'tamarineira', 'recife', 'PE');
 INSERT INTO Endereco(cep, rua, numero, bairro, cidade, estado) VALUES ('51900211', 'rua gato sampaio', 2, 'tejipió', 'recife', 'PE');
