@@ -12,12 +12,17 @@ insert into (done)
 
 */
 
---sequencia de id para pedido, pratos no pedido e avalia
-
+--sequence para id do cupom
 CREATE SEQUENCE id INCREMENT by 1 START WITH 1;
+
+--formatando data e hora
 ALTER SESSION SET NLS_TIMESTAMP_FORMAT='DD-MON-YY HH24:MI';
+
+--diminuindo o tamanho do varchar2 de telefone pra poupar espaço
 ALTER TABLE Telefone_restaurante MODIFY (telefone VARCHAR2(11));
-CREATE INDEX indice_pedido ON Pedido(cliente_cpf, data_pedido);
+
+--facilitando o acesso ao pedido
+CREATE INDEX indice_pedido ON Pedido(cliente_cpf, nome_prato);
 
 --povoamento cep
 
@@ -130,7 +135,7 @@ INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, data_pedido, id_cupom, entrega
                 form_pgmt, nota_c_e, nota_c_r, nota_r_e) VALUES ('4', '6', TIMESTAMP '2021-05-06 18:00:00', 4, '9', TIMESTAMP '2021-05-06 19:00:00', TIMESTAMP '2021-05-06 20:00:00', 'pix', 4, 3, 2);           
 INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, data_pedido, id_cupom, form_pgmt, nota_c_r)
                                                          VALUES ('5', '5', TIMESTAMP '2021-07-09 18:00:00', 5, 'dinheiro', 5);
-/*INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, data_pedido, id_cupom, entregador_cpf, horario_inicio, horario_fim, --testando erro
+/*INSERT INTO Pedido(cliente_cpf, restaurante_cnpj, data_pedido, id_cupom, entregador_cpf, horario_inicio, horario_fim, --testando erro de entregador entregando pra si mesmo
                 form_pgmt, nota_c_e, nota_c_r, nota_r_e) VALUES ('11', '6', TIMESTAMP '2021-05-06 14:00:00', 6, '11', TIMESTAMP '2021-05-06 15:00:00', TIMESTAMP '2021-05-06 16:00:00', 'pix', 3, 4, 5);*/
 
 --povoamento pedido contém prato
