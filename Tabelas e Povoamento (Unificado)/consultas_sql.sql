@@ -112,7 +112,7 @@ CREATE VIEW visao_buscados AS
 SELECT * FROM Pedido
 WHERE entregador_cpf IS NULL;
 
-/* 26. GRANT/REVOKE
+/* 26. GRANT/REVOKE (deixando só de exemplo pois o oracle não deixa a gente fazer isso rs)
 Descrição: Dar ao usuário a capacidade de inserir e deletar restaurantes do banco de dados,
 além de ter acesso à todos os restaurantes cadastradas. Depois, vamos impedir que deletem-se restaurantes. */
 GRANT DELETE, INSERT ON Pessoa TO PUBLIC;
