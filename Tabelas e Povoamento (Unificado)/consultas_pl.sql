@@ -126,6 +126,13 @@ BEGIN
     renda_variacao := aux_renda * 1.03;
 END;
 
+/* backup de uso de parâmetros visto que eu não consegui testar isso aqui de cima
+CREATE OR REPLACE PROCEDURE cadastroPrato (aux IN Pratos_do_restaurante%ROWTYPE) IS
+BEGIN
+    INSERT INTO Pratos_do_restaurante(nome_prato, cnpj, preco, categoria)
+            VALUES (aux.nome_prato, aux.cnpj, aux.preco, aux.categoria);
+END; */
+
 /* 9 E 10 E 11 E 14. CASE WHEN, LOOP EXIT WHEN, CURSOR (OPEN, FETCH, CLOSE) E WHILE LOOP
 Descrição: loop que analisa os endereços das pessoas cadastradas, contabilizando de acordo com a cidade.
 Cursor foi usado para pegar a cidade na tabela endereço; */
