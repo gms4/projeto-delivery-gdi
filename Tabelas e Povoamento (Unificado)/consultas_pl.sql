@@ -115,6 +115,17 @@ BEGIN
         RETURN func_out;
 END avaliacaoPedido;
 
+/*16. USO DE PARÂMETROS (IN, OUT OU IN OUT)
+Descrição: Atribuir variação à renda dos entregadores de acordo com a inflação. 
+Em 2021 a variação dos salários de acordo com a inflação tá uns 3%. */
+CREATE OR REPLACE PROCEDURE variacao_renda (cpf IN Entregador.cpf%TYPE, renda_variacao IN OUT Entregador.renda%TYPE) IS
+    aux_renda NUMBER;
+BEGIN 
+    SELECT renda INTO aux_renda
+    FROM Entregador;
+    renda_variacao := aux_renda * 1.03;
+END;
+
 /* 9 E 10 E 11 E 14. CASE WHEN, LOOP EXIT WHEN, CURSOR (OPEN, FETCH, CLOSE) E WHILE LOOP
 Descrição: loop que analisa os endereços das pessoas cadastradas, contabilizando de acordo com a cidade.
 Cursor foi usado para pegar a cidade na tabela endereço; */
@@ -157,7 +168,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Recife: ' || count_recife || ', Jaboatão: ' || count_jaboatao || ', Cabo: ' || count_cabo || ', Outros: ' || count_outros);
 END;
 
-/*19. CREATE OR REPLACE TRIGGER (COMANDO​)
+/*15 E 19. EXCEPTION WHEN E CREATE OR REPLACE TRIGGER (COMANDO​)
 Descrição: Trigger ativado quando existe a tentativa de se fazer um pedido fora do horário definido pelo aplicativo. */
 CREATE OR REPLACE TRIGGER fora_do_horario
 BEFORE INSERT ON Pedido
