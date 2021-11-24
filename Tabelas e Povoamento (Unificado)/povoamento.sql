@@ -112,7 +112,7 @@ INSERT INTO Telefone_restaurante (cnpj, telefone) VALUES ('5', '33320994');
 
 --povoamento parceria
 
-INSERT INTO Parceria(cnpj_contratante, cnpj_contratado) VALUES ('9', '');
+INSERT INTO Parceria(cnpj_contratante, cnpj_contratado) VALUES ('9', '7');
 INSERT INTO Parceria(cnpj_contratante, cnpj_contratado) VALUES ('8', '7');
 INSERT INTO Parceria(cnpj_contratante, cnpj_contratado) VALUES ('8', '6');
 INSERT INTO Parceria(cnpj_contratante, cnpj_contratado) VALUES ('5', '6');

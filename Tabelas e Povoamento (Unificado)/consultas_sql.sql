@@ -1,7 +1,8 @@
 /* 1. ALTER TABLE 
-Descrição: Diminuir o tamanho do campo telefone VARCHAR2(255) de 255 para 11, diminuindo assim o uso de memória. */
-ALTER TABLE Telefone_restaurante 
-MODIFY (telefone VARCHAR2(11));
+Descrição: Adicionar um check para que seja impossível cadastrar um pedido onde um entregador, que também é cliente, entregue pra ele mesmo 
+(porque no final das contas na verdade é um pedido pego no restaurante. */
+ALTER TABLE Pedido
+ADD CHECK (entregador_cpf != cliente_cpf);
 
 /* 2. CREATE INDEX 
 Descrição: Colocar um índice nos atributos cliente e prato do respectivo pedido, para agilizar a busca e facilitar a produção. */

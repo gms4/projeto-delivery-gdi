@@ -88,7 +88,9 @@ PROCEDURE new_prato(
     END new_prato;
 
 END cadastros;
-
+BEGIN
+    cadastros.new_prato()
+END;
 /*5 E 8 E 13. CREATE FUNCTION, IF/ELSIF E SELECT ... INTO
 Descrição: Função que pega o nome do restaurante e o horário de um pedido feito,
 pega a nota que o cliente atribuiu pra esse pedido e printa mensagens de acordo com a nota. 
@@ -114,17 +116,24 @@ BEGIN
         END IF;
         RETURN func_out;
 END avaliacaoPedido;
+SELECT avaliacaoPedido('4', '6', TIMESTAMP '2021-05-06 18:00:00') FROM DUAL;
 
 /*16. USO DE PARÂMETROS (IN, OUT OU IN OUT)
 Descrição: Atribuir variação à renda dos entregadores de acordo com a inflação. 
 Em 2021 a variação dos salários de acordo com a inflação tá uns 3%. */
-CREATE OR REPLACE PROCEDURE variacao_renda (cpf IN Entregador.cpf%TYPE, renda_variacao IN OUT Entregador.renda%TYPE) IS
+CREATE OR REPLACE FUNCTION variacao_renda (cpf Entregador.cpf%TYPE) 
+RETURN NUMBER
+IS
     aux_renda NUMBER;
+    result NUMBER;
 BEGIN 
-    SELECT renda INTO aux_renda
-    FROM Entregador;
-    renda_variacao := aux_renda * 1.03;
+    SELECT E.renda INTO aux_renda
+    FROM Entregador E
+    WHERE E.cpf = cpf;
+    result := aux_renda * 1.03;
+    RETURN result;
 END;
+SELECT variacao_renda ('12') FROM DUAL;
 
 /* backup de uso de parâmetros visto que eu não consegui testar isso aqui de cima
 CREATE OR REPLACE PROCEDURE cadastroPrato (aux IN Pratos_do_restaurante%ROWTYPE) IS
@@ -154,7 +163,7 @@ BEGIN
     count_jaboatao := 0;
     count_cabo := 0;
     count_outros := 0;
-    i := 1;
+    i := 0;
     SELECT COUNT(*) INTO q FROM Endereco;
     WHILE i < q LOOP
         FETCH c_endereco INTO aux_cidade;
