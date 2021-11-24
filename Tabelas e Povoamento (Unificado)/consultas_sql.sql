@@ -46,7 +46,7 @@ WHERE cliente_cpf IS NULL;
 
 /* 11. INNER JOIN 
 Descrição: Buscar o nome, cpf e renda das pessoas cadastradas que são entregadores. */
-SELECT DISTINCT P.nome, P.cpf, E.renda FROM Pessoa P
+SELECT P.nome, P.cpf, E.renda FROM Pessoa P
 INNER JOIN Entregador E
 ON P.cpf = E.cpf;
 
@@ -81,7 +81,7 @@ WHERE renda > ANY (SELECT renda FROM Entregador WHERE veiculo = 'patinete');
 /* 20. SUBCONSULTA COM ALL 
 Descrição: Listar entregadores que tem renda menor que a renda de cada entregador que usa fiat strada. */
 SELECT cpf, renda, veiculo FROM Entregador 
-WHERE renda < ANY (SELECT renda FROM Entregador WHERE veiculo = 'fiat strada');
+WHERE renda < ALL (SELECT renda FROM Entregador WHERE veiculo = 'fiat strada');
 
 /* 21. ORDER BY 
 Descrição: Ordenar os pratos dos restaurantes em ordem crescente. */
@@ -90,16 +90,16 @@ ORDER BY preco;
 
 /* 22. GROUP BY 
 Descrição: Mostrar quantos pratos possuem preço menor do que a média de preço os pratos cadastrados pelos restaurantes, agrupando por categoria. */
-SELECT COUNT (preco), categoria FROM Pratos_do_restaurante P
-WHERE P.preco < (SELECT AVG (preco) FROM Pratos_do_restaurante)
-GROUP BY P.categoria;
+SELECT COUNT (preco), categoria FROM Pratos_do_restaurante
+WHERE preco < (SELECT AVG (preco) FROM Pratos_do_restaurante)
+GROUP BY categoria;
 
 /* 23. HAVING 
 Descrição: Mostrar quantos pratos possuem preço menor do que a média de preço os pratos cadastrados pelos restaurantes, 
 agrupando por categoria, com a condição que o count depois do agrupamento seja maior que 1. */
-SELECT COUNT (preco), categoria FROM Pratos_do_restaurante P
-WHERE P.preco < (SELECT AVG (preco) FROM Pratos_do_restaurante)
-GROUP BY P.categoria
+SELECT COUNT (preco), categoria FROM Pratos_do_restaurante
+WHERE preco < (SELECT AVG (preco) FROM Pratos_do_restaurante)
+GROUP BY categoria
 HAVING COUNT (preco) > 1;
 
 /* 24. UNION, INTERSECT OU MINUS 
