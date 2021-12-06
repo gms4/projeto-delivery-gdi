@@ -118,9 +118,7 @@ BEGIN
 END avaliacaoPedido;
 SELECT avaliacaoPedido('4', '6', TIMESTAMP '2021-05-06 18:00:00') FROM DUAL;
 
-/*16. USO DE PARÂMETROS (IN, OUT OU IN OUT)
-Descrição: Atribuir variação à renda dos entregadores de acordo com a inflação. 
-Em 2021 a variação dos salários de acordo com a inflação tá uns 3%. */
+/* backup função
 CREATE OR REPLACE FUNCTION variacao_renda (cpf Entregador.cpf%TYPE) 
 RETURN NUMBER
 IS
@@ -133,14 +131,16 @@ BEGIN
     result := aux_renda * 1.03;
     RETURN result;
 END;
-SELECT variacao_renda ('12') FROM DUAL;
+SELECT variacao_renda ('12') FROM DUAL;*/
 
-/* backup de uso de parâmetros visto que eu não consegui testar isso aqui de cima
+/*16. USO DE PARÂMETROS (IN, OUT OU IN OUT)
+Descrição: Procedimento que cadastra um prato. */
+
 CREATE OR REPLACE PROCEDURE cadastroPrato (aux IN Pratos_do_restaurante%ROWTYPE) IS
 BEGIN
     INSERT INTO Pratos_do_restaurante(nome_prato, cnpj, preco, categoria)
             VALUES (aux.nome_prato, aux.cnpj, aux.preco, aux.categoria);
-END; */
+END;
 
 /* 9 E 10 E 11 E 14. CASE WHEN, LOOP EXIT WHEN, CURSOR (OPEN, FETCH, CLOSE) E WHILE LOOP
 Descrição: loop que analisa os endereços das pessoas cadastradas, contabilizando de acordo com a cidade.

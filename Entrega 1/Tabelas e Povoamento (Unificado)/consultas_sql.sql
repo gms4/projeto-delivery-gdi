@@ -71,7 +71,7 @@ ON P.cliente_cpf = C.cliente_cpf;
 Descrição: Buscar o cpf de todos os entregadores que estarão em atividade em 2021-05-06 18:00:00 ou 2021-07-09 18:00:00. */
 SELECT E.cpf FROM Entregador E
 WHERE E.cpf IN (SELECT entregador_cpf 
-FROM PEDIDO WHERE data_pedido = '06-MAY-21 18:00' OR data_pedido = '12-OCT-21 15:00');
+FROM Pedido WHERE data_pedido = '06-MAY-21 18:00' OR data_pedido = '12-OCT-21 15:00');
 
 /* 19. SUBCONSULTA COM ANY
 Descrição: Listar entregadores que tem renda maior que a renda de pelo menos um entregador que usa patinete. */
