@@ -1,3 +1,5 @@
+ALTER SESSION SET NLS_TIMESTAMP_FORMAT='DD-MON-YY HH24:MI';
+/
 CREATE SEQUENCE id INCREMENT by 1 START WITH 1;
 / 
 CREATE SEQUENCE id_detalhamento INCREMENT by 1 START WITH 1;
@@ -59,7 +61,8 @@ INSERT INTO tb_cliente VALUES (
         ) 
     );
 /
-
+SELECT nome, cpf, email, C.endereco.rua FROM tb_cliente C;
+/
 ----- POVOAMENTO ENTREGADOR -----
 INSERT INTO tb_entregador VALUES (
     tp_entregador( 
@@ -124,6 +127,8 @@ INSERT INTO tb_entregador VALUES (
         )
 );
 /
+SELECT nome, cpf, email, renda, veiculo, E.endereco.rua FROM tb_entregador E;
+/
 ----- POVOAMENTO RESTAURANTE -----
 INSERT INTO tb_restaurante VALUES (
     tp_restaurante(
@@ -176,6 +181,8 @@ INSERT INTO tb_restaurante VALUES (
     )
 );
 /
+SELECT cnpj, nome, frete, R.endereco.rua, R.telefones FROM tb_restaurante R;
+/
 ----- POVOAMENTO CUPOM -----
 INSERT INTO tb_cupom VALUES (
     tp_cupom(
@@ -196,18 +203,19 @@ INSERT INTO tb_cupom VALUES (
 );
 /
 INSERT INTO tb_cupom VALUES (
-    tp_cupom(
+    
         id.NEXTVAL,
         (SELECT REF(C) FROM tb_cliente C WHERE C.cpf = '3'),
         '5 reais em produtos Ambev',
         5
-    )
+    
 );
 /
-
+SELECT id, descricao, desconto, DEREF(CP.cliente).cpf FROM tb_cupom CP;
+/
 ----- POVOAMENTO PRATO -----
 INSERT INTO tb_prato VALUES (
-    tb_prato(
+    tp_prato(
         'Chã de Bode',
         149.9,
         'para até 4 pessoas',
@@ -216,7 +224,7 @@ INSERT INTO tb_prato VALUES (
 );
 /
 INSERT INTO tb_prato VALUES (
-    tb_prato(
+    tp_prato(
         'Casquinha de Siri',
         9.9,
         'petiscos',
@@ -225,7 +233,7 @@ INSERT INTO tb_prato VALUES (
 );
 /
 INSERT INTO tb_prato VALUES (
-    tb_prato(
+    tp_prato(
         'hamburguer de siri',
         25,
         'burgers',
@@ -234,7 +242,7 @@ INSERT INTO tb_prato VALUES (
 );
 /
 INSERT INTO tb_prato VALUES (
-    tb_prato(
+    tp_prato(
         'açaí com mel de engenho',
         15,
         'açaí',
@@ -243,7 +251,7 @@ INSERT INTO tb_prato VALUES (
 );
 /
 INSERT INTO tb_prato VALUES (
-    tb_prato(
+    tp_prato(
         'kebab de frango',
         21,
         'cozinha grega',
@@ -252,7 +260,7 @@ INSERT INTO tb_prato VALUES (
 );
 /
 INSERT INTO tb_prato VALUES (
-    tb_prato(
+    tp_prato(
         'kibe de carne de sol (8 unidades)',
         24,
         'petiscos',
@@ -260,3 +268,123 @@ INSERT INTO tb_prato VALUES (
     )
 );
 /
+SELECT nome, preco, categoria, DEREF(P.restaurante).nome FROM tb_prato P;
+/
+----- POVOAMENTO PEDIDO -----
+INSERT INTO tb_pedido VALUES (
+    tp_pedido(
+        (SELECT REF(C) FROM tb_cliente C WHERE C.cpf = '1'),
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.cnpj = '90'),
+        TIMESTAMP '2020-01-01 17:00:00',
+        (SELECT REF(CP) FROM tb_cupom CP WHERE CP.id = '3'),
+        (SELECT REF(E) FROM tb_entregador E WHERE E.cpf = '4'),
+        TIMESTAMP '2020-01-01 18:00:00',
+        TIMESTAMP '2020-01-01 19:00:00',
+        'crédito',
+            tp_arr_notas(tp_notas(
+                5,
+                5,
+                5
+            )
+        )
+    )
+);
+/
+INSERT INTO tb_pedido VALUES (
+    tp_pedido(
+        (SELECT REF(C) FROM tb_cliente C WHERE C.cpf = '2'),
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.cnpj = '91'),
+        TIMESTAMP '2021-01-01 17:00:00',
+        NULL,
+        NULL,
+        TIMESTAMP '2021-01-01 18:00:00',
+        TIMESTAMP '2021-01-01 19:00:00',
+        'dinheiro',
+            tp_arr_notas(tp_notas(
+                3,
+                3,
+                4
+            )
+        )
+    )
+);
+/
+INSERT INTO tb_pedido VALUES (
+    tp_pedido(
+        (SELECT REF(C) FROM tb_cliente C WHERE C.cpf = '3'),
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.cnpj = '92'),
+        TIMESTAMP '2020-01-01 18:00:00',
+        (SELECT REF(CP) FROM tb_cupom CP WHERE CP.id = '1'),
+        (SELECT REF(E) FROM tb_entregador E WHERE E.cpf = '5'),
+        TIMESTAMP '2020-01-01 19:00:00',
+        TIMESTAMP '2020-01-01 20:00:00',
+        'pix',
+            tp_arr_notas(tp_notas(
+                5,
+                4,
+                3
+            )
+        )
+    )
+);
+/
+SELECT DEREF(P.cliente).cpf, DEREF(P.restaurante).cnpj, data_pedido, DEREF(P.cupom).desconto, DEREF(P.entregador).cpf, inicio, fim, pagamento, notas FROM tb_pedido P
+/
+
+----- POVOAMENTO DETALHAMENTO -----
+INSERT INTO  tb_detalhamento VALUES (
+    tp_detalhamento(
+        id_detalhamento.NEXTVAL,
+        (SELECT REF(P) FROM tb_pedido P WHERE P.data_pedido = '01-JAN-2020 17:00'),
+        (SELECT REF(C) FROM tb_cliente C WHERE C.cpf = '1'),
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.cnpj = '90'),
+        (SELECT REF(PR) FROM tb_prato PR WHERE PR.nome = 'Chã de Bode')
+    )
+);
+/
+INSERT INTO  tb_detalhamento VALUES (
+    tp_detalhamento(
+        id_detalhamento.NEXTVAL,
+        (SELECT REF(P) FROM tb_pedido P WHERE P.data_pedido = '01-JAN-2021 17:00'),
+        (SELECT REF(C) FROM tb_cliente C WHERE C.cpf = '2'),
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.cnpj = '91'),
+        (SELECT REF(PR) FROM tb_prato PR WHERE PR.nome = 'hamburguer de siri')
+    )
+);
+/
+INSERT INTO  tb_detalhamento VALUES (
+    tp_detalhamento(
+        id_detalhamento.NEXTVAL,
+        (SELECT REF(P) FROM tb_pedido P WHERE P.data_pedido = '01-JAN-2020 18:00'),
+        (SELECT REF(C) FROM tb_cliente C WHERE C.cpf = '3'),
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.cnpj = '92'),
+        (SELECT REF(PR) FROM tb_prato PR WHERE PR.nome = 'kebab de frango')
+    )
+);
+/
+SELECT id_detalhamento, DEREF(D.pedido).data_pedido, DEREF(D.cliente).cpf, DEREF(D.restaurante).nome, DEREF(D.prato).nome FROM tb_detalhamento D;
+/
+
+----- POVOAMENTO PARCERIA -----
+INSERT INTO tb_parceria VALUES (
+    tp_parceria(
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.nome = 'kebabado'),
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.nome = 'bode do nô')
+    )
+);
+/
+INSERT INTO tb_parceria VALUES (
+    tp_parceria(
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.nome = 'kebabado'),
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.nome = 'burgaçaí')
+    )
+);
+/
+INSERT INTO tb_parceria VALUES (
+    tp_parceria(
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.nome = 'burgaçaí'),
+        (SELECT REF(R) FROM tb_restaurante R WHERE R.nome = 'bode do nô')
+    )
+);
+/
+SELECT DEREF(PC.contratante).nome, (PC.contratado).nome FROM tb_parceria PC;

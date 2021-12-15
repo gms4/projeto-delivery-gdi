@@ -137,7 +137,7 @@ CREATE OR REPLACE TYPE tp_parceria AS OBJECT (
 ----- PRATO -----
 CREATE OR REPLACE TYPE tp_prato AS OBJECT (
 
-    nome VARCHAR2 (30),
+    nome VARCHAR2 (50),
     preco NUMBER,
     categoria VARCHAR2 (30),
     restaurante REF tp_restaurante,
@@ -182,7 +182,7 @@ CREATE OR REPLACE TYPE tp_pedido AS OBJECT (
     cliente REF tp_cliente,
     restaurante REF tp_restaurante,
     data_pedido TIMESTAMP,
-    id REF tp_cupom,
+    cupom REF tp_cupom,
     entregador REF tp_entregador,
     inicio TIMESTAMP,
     fim TIMESTAMP,
@@ -212,10 +212,10 @@ END;
 CREATE OR REPLACE TYPE tp_detalhamento AS OBJECT (
 
     id_detalhamento INTEGER,
-    data_pedido REF tp_pedido,
+    pedido REF tp_pedido,
     cliente REF tp_cliente,
     restaurante REF tp_restaurante,
-    nome REF tp_prato
+    prato REF tp_prato
 
 );
 
@@ -241,11 +241,13 @@ CREATE OR REPLACE TYPE tp_detalhamento AS OBJECT (
 16. SCOPE IS
 17. INSERT INTO ✅
 18. SELECT REF
-19. SELECT DEREF
+19. SELECT DEREF ✅
 20. VALUE
 21. VARRAY ✅
 22. CONSULTA A VARRAY
 23. NESTED TABLE (tirei porque não é pra essa entrega)
 24. CONSULTA A NESTED TABLE
+
+Os que tão faltando creio que seja pra segunda entrega
 
 */

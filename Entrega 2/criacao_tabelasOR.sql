@@ -40,6 +40,13 @@ CREATE TABLE tb_cupom OF tp_cupom (
 
 /
 
+CREATE TABLE tb_parceria OF tp_parceria (
+    contratante NOT NULL,
+    contratado NOT NULL
+);
+
+/
+
 CREATE TABLE tb_prato OF tp_prato (
 
     nome PRIMARY KEY NOT NULL,
@@ -53,12 +60,12 @@ CREATE TABLE tb_prato OF tp_prato (
 
 CREATE TABLE tb_pedido OF tp_pedido (
 
-    data_pedido PRIMARY KEY,
-    pagamento NOT NULL,
     cliente WITH ROWID REFERENCES tb_cliente NOT NULL,
-    entregador WITH ROWID REFERENCES tb_entregador, 
-    restaurante WITH ROWID REFERENCES tb_restaurante NOT NULL, 
-    id WITH ROWID REFERENCES tb_cupom
+    restaurante WITH ROWID REFERENCES tb_restaurante NOT NULL,
+    data_pedido PRIMARY KEY,
+    cupom WITH ROWID REFERENCES tb_cupom,
+    entregador WITH ROWID REFERENCES tb_entregador,  
+    pagamento NOT NULL
     
 );
 
@@ -81,10 +88,10 @@ CREATE TABLE tb_endereco OF tp_endereco(
 CREATE TABLE tb_detalhamento OF tp_detalhamento (
 
     id_detalhamento PRIMARY KEY,
-    data_pedido WITH ROWID REFERENCES tb_pedido NOT NULL,
+    pedido WITH ROWID REFERENCES tb_pedido NOT NULL,
     cliente WITH ROWID REFERENCES tb_cliente NOT NULL,
     restaurante WITH ROWID REFERENCES tb_restaurante NOT NULL,
-    nome WITH ROWID REFERENCES tb_prato NOT NULL
+    prato WITH ROWID REFERENCES tb_prato NOT NULL
 
 );
 
