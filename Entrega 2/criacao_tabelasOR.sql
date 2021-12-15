@@ -106,7 +106,7 @@ CREATE TABLE tb_pessoa OF tp_pessoa(
 );
 
 
-CREATE TABLE tp_telefone_restaurante OF tb_telefone_restaurante(
+CREATE TABLE tb_telefone_restaurante OF tb_telefone_restaurante(
 	cnpj NOT NULL,
     telefone NOT NULL UNIQUE,
     PRIMARY KEY (cnpj, telefone),
