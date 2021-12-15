@@ -1,3 +1,5 @@
+--POVOAMENTO CERTO LÁ EMBAIXO
+
 --povoamento endereço
 
 INSERT INTO tp_endereco(cep, rua, numero, bairro, cidade, estado) VALUES ('51900210', 'rua cachorro nogueira', 1, 'tamarineira', 'recife', 'PE');
@@ -133,3 +135,133 @@ select * from (tb_cupom);
 select * from (tb_parceria);
 select * from (tb_pedido);
 select * from (tb_pedido_contem_prato);
+
+/*
+
+CREATE SEQUENCE id INCREMENT by 1 START WITH 1;
+/ 
+----- POVOAMENTO CLIENTE -----
+INSERT INTO tb_cliente VALUES ( 
+    tp_cliente( 
+        '1', 
+        'Guigs', 
+        to_date('11/08/1995', 'dd/mm/yy'), 
+        '20', 
+        tp_endereco( 
+            '50', 
+            'rua carlos pereira falquinho', 
+            70, 
+            'boa viagem', 
+            'recife', 
+            'PE' 
+            ), 
+        'guigs@cin', 
+        to_date('11/08/2020', 'dd/mm;yy') 
+        ) 
+    );
+/
+INSERT INTO tb_cliente VALUES ( 
+    tp_cliente( 
+        '2', 
+        'Dedezinho', 
+        to_date('15/08/2001', 'dd/mm/yy'), 
+        '21', 
+        tp_endereco( 
+            '51', 
+            'rua megamente almeida', 
+            71, 
+            'madalena', 
+            'recife', 
+            'PE' 
+            ), 
+        'dedezinho@cin', 
+        to_date('11/08/2021', 'dd/mm;yy') 
+        ) 
+    );
+/
+INSERT INTO tb_cliente VALUES ( 
+    tp_cliente( 
+        '3', 
+        'Eattron', 
+        to_date('11/07/2001', 'dd/mm/yy'), 
+        '22', 
+        tp_endereco( 
+            '52', 
+            'rua league of legends', 
+            72, 
+            'prado', 
+            'recife', 
+            'PE' 
+            ), 
+        'eattron@cin', 
+        to_date('11/08/2019', 'dd/mm;yy') 
+        ) 
+    );
+/
+
+----- POVOAMENTO ENTREGADOR -----
+INSERT INTO tb_entregador VALUES (
+    tp_entregador( 
+        '4', 
+        'batman', 
+        to_date('11/02/2001', 'dd/mm/yy'), 
+        '23', 
+        tp_endereco( 
+            '53', 
+            'rua cavaleiro das trevas', 
+            73, 
+            'poço da panela', 
+            'recife', 
+            'PE' 
+            ), 
+        'batman@cin',
+        to_date('05/02/2020', 'dd/mm/yy'),
+        1500,
+        'patinete'
+        )
+);
+/
+INSERT INTO tb_entregador VALUES (
+    tp_entregador( 
+        '5', 
+        'biel', 
+        to_date('11/01/2000', 'dd/mm/yy'), 
+        '24', 
+        tp_endereco( 
+            '54', 
+            'rua liamba', 
+            74, 
+            'graças', 
+            'recife', 
+            'PE' 
+            ), 
+        'biel@cin',
+        to_date('05/05/2020', 'dd/mm/yy'),
+        1800,
+        'bicicleta'
+        )
+);
+/
+INSERT INTO tb_entregador VALUES (
+    tp_entregador( 
+        '6', 
+        'trajano', 
+        to_date('11/07/1995', 'dd/mm/yy'), 
+        '25', 
+        tp_endereco( 
+            '55', 
+            'rua porquinho paquistanês', 
+            75, 
+            'aflitos', 
+            'recife', 
+            'PE' 
+            ), 
+        'trajano@cin',
+        to_date('05/12/2020', 'dd/mm/yy'),
+        2000,
+        'moto'
+        )
+);
+
+
+*/
