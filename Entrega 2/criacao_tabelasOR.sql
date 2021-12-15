@@ -26,25 +26,16 @@ CREATE TABLE tb_restaurante OF tp_restaurante (
     endereco NOT NULL,
     telefones NOT NULL
 
-) NESTED TABLE pratos STORE AS pratos_restaurante;
+);
 
 /
 
 CREATE TABLE tb_cupom OF tp_cupom (
 
     id PRIMARY KEY,
-    cpf WITH ROWID REFERENCES tb_cliente,
+    cliente WITH ROWID REFERENCES tb_cliente,
     descricao NOT NULL
 
-);
-
-/
-
-CREATE TABLE tb_pedido OF tp_pedido (
-
-    data_pedido PRIMARY KEY,
-    forma_pgmt NOT NULL,
-    
 );
 
 /
@@ -54,8 +45,21 @@ CREATE TABLE tb_prato OF tp_prato (
     nome PRIMARY KEY NOT NULL,
     preco NOT NULL,
     categoria NOT NULL,
-    cnpj WITH ROWID REFERENCES tb_restaurante NOT NULL
+    restaurante WITH ROWID REFERENCES tb_restaurante NOT NULL
 
+);
+
+/
+
+CREATE TABLE tb_pedido OF tp_pedido (
+
+    data_pedido PRIMARY KEY,
+    pagamento NOT NULL,
+    cliente WITH ROWID REFERENCES tb_cliente NOT NULL,
+    entregador WITH ROWID REFERENCES tb_entregador, 
+    restaurante WITH ROWID REFERENCES tb_restaurante NOT NULL, 
+    id WITH ROWID REFERENCES tb_cupom
+    
 );
 
 /
@@ -68,7 +72,7 @@ CREATE TABLE tb_endereco OF tp_endereco(
     bairro NOT NULL,
     cidade NOT NULL,
     estado NOT NULL, 
-    PRIMARY KEY cep, numero  
+    PRIMARY KEY (cep, numero)  
     
 );
 
@@ -76,11 +80,12 @@ CREATE TABLE tb_endereco OF tp_endereco(
 
 CREATE TABLE tb_detalhamento OF tp_detalhamento (
 
-    data_pedido NOT NULL,
-    cliente_cpf NOT NULL,
-    restaurante_cnpj NOT NULL,
-    nome_prato NOT NULL,
-    PRIMARY KEY (data_pedido, cliente_cpf, restaurante_cnpj, nome_prato)
+    id_detalhamento PRIMARY KEY,
+    data_pedido WITH ROWID REFERENCES tb_pedido NOT NULL,
+    cliente WITH ROWID REFERENCES tb_cliente NOT NULL,
+    restaurante WITH ROWID REFERENCES tb_restaurante NOT NULL,
+    nome WITH ROWID REFERENCES tb_prato NOT NULL
 
+);
 
 /

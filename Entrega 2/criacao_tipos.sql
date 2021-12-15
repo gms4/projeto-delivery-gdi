@@ -111,7 +111,7 @@ CREATE OR REPLACE TYPE tp_restaurante AS OBJECT (
     telefones tp_arr_telefone,
     FINAL MAP MEMBER FUNCTION qntd_telefones return NUMBER
 
-) NOT FINAL NOT INSTANTIABLE;
+);
 
 /
 
@@ -125,10 +125,11 @@ END;
 /
 
 ----- PARCERIA -----
-CREATE OR REPLACE TYPLE tp_parceria AS OBJECT (
+CREATE OR REPLACE TYPE tp_parceria AS OBJECT (
 
     contratante REF tp_restaurante,
     contratado REF tp_restaurante
+
 );
 
 /
@@ -136,6 +137,7 @@ CREATE OR REPLACE TYPLE tp_parceria AS OBJECT (
 ----- PRATO -----
 CREATE OR REPLACE TYPE tp_prato AS OBJECT (
 
+    restaurante REF tp_restaurante,
     nome VARCHAR2 (30),
     preco NUMBER,
     categoria VARCHAR2 (30),
@@ -149,9 +151,10 @@ CREATE OR REPLACE TYPE tp_prato AS OBJECT (
 
 CREATE OR REPLACE TYPE BODY tp_prato AS 
     CONSTRUCTOR FUNCTION tp_prato ((SELF IN OUT NOCOPY 
-                    tp_prato, inome VARCHAR2, ipreco NUMBER, icategoria VARCHAR2)
+                    tp_prato, irestaurate VARCHAR2, inome VARCHAR2, ipreco NUMBER, icategoria VARCHAR2)
                         RETURN SELF AS RESULT IS
     BEGIN 
+        SELF.restaurante := irestaurate;
         SELF.nome := inome;
         SELF.preco := ipreco;
         SELF.categoria := icategoria;
@@ -208,6 +211,7 @@ END;
 ----- DETALHAMENTO DO PEDIDO -----
 CREATE OR REPLACE TYPE tp_detalhamento AS OBJECT (
 
+    id_detalhamento INTEGER,
     data_pedido REF tp_pedido,
     cliente REF tp_cliente,
     restaurante REF tp_restaurante,
@@ -241,7 +245,7 @@ CREATE OR REPLACE TYPE tp_detalhamento AS OBJECT (
 20. VALUE
 21. VARRAY ✅
 22. CONSULTA A VARRAY
-23. NESTED TABLE ✅
+23. NESTED TABLE (tirei porque não é pra essa entrega)
 24. CONSULTA A NESTED TABLE
 
 */

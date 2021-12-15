@@ -262,6 +262,25 @@ INSERT INTO tb_entregador VALUES (
         'moto'
         )
 );
+/
+----- POVOAMENTO RESTAURANTE -----
+INSERT INTO tb_restaurante VALUES (
+    tp_restaurante(
+        '90',
+        'bode do nô',
+        5,
+        tp_endereco(
+            '56', 
+            'rua guilherme de pontes sobrinho', 
+            76, 
+            'boa viagem', 
+            'recife', 
+            'PE' 
+        ),
+        tp_arr_telefone(tp_telefone('26'), tp_telefone('27'))
+    )
+);
+/
 
 
 */
