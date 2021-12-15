@@ -137,10 +137,10 @@ CREATE OR REPLACE TYPE tp_parceria AS OBJECT (
 ----- PRATO -----
 CREATE OR REPLACE TYPE tp_prato AS OBJECT (
 
-    restaurante REF tp_restaurante,
     nome VARCHAR2 (30),
     preco NUMBER,
     categoria VARCHAR2 (30),
+    restaurante REF tp_restaurante,
     CONSTRUCTOR FUNCTION tp_prato (SELF IN OUT NOCOPY 
                     tp_prato, inome VARCHAR2, ipreco NUMBER, icategoria VARCHAR2)
                         RETURN SELF AS RESULT

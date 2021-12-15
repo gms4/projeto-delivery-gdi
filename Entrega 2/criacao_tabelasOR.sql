@@ -33,7 +33,7 @@ CREATE TABLE tb_restaurante OF tp_restaurante (
 CREATE TABLE tb_cupom OF tp_cupom (
 
     id PRIMARY KEY,
-    cliente WITH ROWID REFERENCES tb_cliente,
+    cliente WITH ROWID REFERENCES tb_cliente NOT NULL,
     descricao NOT NULL
 
 );
