@@ -84,6 +84,7 @@ OVERRIDING MEMBER PROCEDURE print_info IS
         DBMS_OUTPUT.PUT_LINE(nome);
         DBMS_OUTPUT.PUT_LINE(cpf);
         DBMS_OUTPUT.PUT_LINE(renda);
+        DBMS_OUTPUT.PUT_LINE(veiculo);
     END;
 CONSTRUCTOR FUNCTION tp_entregador (x1 tp_entregador) RETURN SELF AS RESULT IS
     BEGIN
@@ -140,19 +141,21 @@ CREATE OR REPLACE TYPE tp_restaurante AS OBJECT (
     endereco tp_endereco,
     telefones tp_arr_telefone,
     pratos tp_nt_pratos,
-    MAP MEMBER FUNCTION qntd_telefones return NUMBER
+    MAP MEMBER FUNCTION qntd_telefones RETURN NUMBER
 
 );
 
 /
 
 CREATE OR REPLACE TYPE BODY tp_restaurante AS 
-MAP MEMBER FUNCTION qntd_telefones return NUMBER IS
-    BEGIN  
-        RETURN COUNT_ELEMENTS(telefones);
+MAP MEMBER FUNCTION qntd_telefones RETURN NUMBER IS
+selfCnt NUMBER;
+    BEGIN
+        SELECT COUNT(*) INTO selfCnt
+        FROM TABLE(SELF.telefones);
+        RETURN selfCnt;
     END;
 END;
-
 /
 
 ----- PARCERIA -----
@@ -179,16 +182,10 @@ CREATE OR REPLACE TYPE tp_cupom AS OBJECT (
 /
 CREATE OR REPLACE TYPE BODY tp_cupom AS
 ORDER MEMBER FUNCTION comparaDesconto (SELF IN OUT NOCOPY tp_cupom, c tp_cupom) RETURN NUMBER IS
-    desconto1 NUMBER;
-    desconto2 NUMBER;
     BEGIN
-        SELECT desconto INTO desconto1
-        FROM TABLE(SELF.desconto);
-        SELECT desconto INTO desconto2
-        FROM TABLE(c.desconto);
-        IF desconto1 < desconto2 THEN 
+        IF SELF.desconto < c.desconto THEN 
             RETURN -1;
-        ELSIF desconto1 > desconto2 THEN 
+        ELSIF SELF.desconto > c.desconto THEN 
             RETURN 1;
         ELSE 
             RETURN 0;
@@ -217,10 +214,10 @@ CREATE OR REPLACE TYPE tp_pedido AS OBJECT (
 ----- DETALHAMENTO DO PEDIDO -----
 CREATE OR REPLACE TYPE tp_detalhamento AS OBJECT (
 
-    pedido REF tp_pedido,
-    cliente REF tp_cliente,
-    restaurante REF tp_restaurante,
-    prato VARCHAR2(50)
+    pedido REF tp_pedido, --data--
+    cliente REF tp_cliente, --cpf--
+    restaurante REF tp_restaurante, --cnpj--
+    prato VARCHAR2(50) --referenciar pelo codigo--
 
 );
 

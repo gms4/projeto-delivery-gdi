@@ -65,7 +65,7 @@ CREATE TABLE tb_detalhamento OF tp_detalhamento (
     pedido WITH ROWID REFERENCES tb_pedido NOT NULL,
     cliente WITH ROWID REFERENCES tb_cliente NOT NULL,
     restaurante WITH ROWID REFERENCES tb_restaurante NOT NULL,
-    prato NOT NULL
+    prato NOT NULL UNIQUE
 
 );
 

@@ -314,9 +314,6 @@ INSERT INTO  tb_detalhamento VALUES (
     )
 );
 /
-SELECT DEREF(D.pedido).data_pedido, DEREF(D.cliente).cpf, DEREF(D.restaurante).nome, D.prato.nome_prato FROM tb_detalhamento D;
-/
-
 ----- POVOAMENTO PARCERIA -----
 INSERT INTO tb_parceria VALUES (
     tp_parceria(

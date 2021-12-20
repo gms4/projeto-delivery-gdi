@@ -8,7 +8,6 @@ SELECT nome, cpf, email, renda, veiculo, E.endereco.rua FROM tb_entregador E;
 SELECT cnpj, nome, frete, R.endereco.rua, R.telefones, pratos FROM tb_restaurante R;
 /
 ----- CONSULTA PRIMÁRIA CUPOM -----
-SELECT id, descricao, desconto, DEREF(CP.cliente).cpf FROM tb_cupom CP;
 SELECT id, descricao, desconto, CP.cliente.cpf AS Cliente FROM tb_cupom CP;
 /
 ----- CONSULTA PRIMÁRIA PEDIDO -----
@@ -42,7 +41,7 @@ DECLARE
     entregador tp_entregador;
 BEGIN
     SELECT VALUE(E) INTO entregador FROM tb_entregador E WHERE E.cpf = '4';
-    entregador.variacao_renda(2000);
+    entregador.variacao_renda(entregador.renda);
 END;
 /
 ----- OVERRIDING MEMBER PROCEDURE -----
