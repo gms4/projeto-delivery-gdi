@@ -26,14 +26,14 @@ CREATE TABLE tb_restaurante OF tp_restaurante (
     endereco NOT NULL,
     telefones NOT NULL
 
-);
+) NESTED TABLE pratos STORE AS pratos_no_cardápio;
 
 /
 
 CREATE TABLE tb_cupom OF tp_cupom (
 
     id PRIMARY KEY,
-    cliente WITH ROWID REFERENCES tb_cliente NOT NULL,
+    cliente SCOPE IS tb_cliente,
     descricao NOT NULL
 
 );
@@ -43,17 +43,6 @@ CREATE TABLE tb_cupom OF tp_cupom (
 CREATE TABLE tb_parceria OF tp_parceria (
     contratante NOT NULL,
     contratado NOT NULL
-);
-
-/
-
-CREATE TABLE tb_prato OF tp_prato (
-
-    nome PRIMARY KEY NOT NULL,
-    preco NOT NULL,
-    categoria NOT NULL,
-    restaurante WITH ROWID REFERENCES tb_restaurante NOT NULL
-
 );
 
 /
@@ -71,27 +60,12 @@ CREATE TABLE tb_pedido OF tp_pedido (
 
 /
 
-CREATE TABLE tb_endereco OF tp_endereco(
-
-    cep NOT NULL,
-    rua NOT NULL,
-    numero NOT NULL,
-    bairro NOT NULL,
-    cidade NOT NULL,
-    estado NOT NULL, 
-    PRIMARY KEY (cep, numero)  
-    
-);
-
-/
-
 CREATE TABLE tb_detalhamento OF tp_detalhamento (
 
-    id_detalhamento PRIMARY KEY,
     pedido WITH ROWID REFERENCES tb_pedido NOT NULL,
     cliente WITH ROWID REFERENCES tb_cliente NOT NULL,
     restaurante WITH ROWID REFERENCES tb_restaurante NOT NULL,
-    prato WITH ROWID REFERENCES tb_prato NOT NULL
+    prato NOT NULL
 
 );
 
