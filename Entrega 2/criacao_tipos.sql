@@ -141,14 +141,14 @@ CREATE OR REPLACE TYPE tp_restaurante AS OBJECT (
     endereco tp_endereco,
     telefones tp_arr_telefone,
     pratos tp_nt_pratos,
-    MAP MEMBER FUNCTION qntd_telefones RETURN NUMBER
+    FINAL MAP MEMBER FUNCTION qntd_telefones RETURN NUMBER
 
 );
 
 /
 
 CREATE OR REPLACE TYPE BODY tp_restaurante AS 
-MAP MEMBER FUNCTION qntd_telefones RETURN NUMBER IS
+FINAL MAP MEMBER FUNCTION qntd_telefones RETURN NUMBER IS
 selfCnt NUMBER;
     BEGIN
         SELECT COUNT(*) INTO selfCnt
