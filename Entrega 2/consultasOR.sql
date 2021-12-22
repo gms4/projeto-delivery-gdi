@@ -5,7 +5,7 @@ SELECT nome, cpf, email, C.endereco.rua FROM tb_cliente C;
 SELECT nome, cpf, email, renda, veiculo, E.endereco.rua FROM tb_entregador E;
 /
 ----- CONSULTA PRIMÁRIA RESTAURANTE ----- 
-SELECT cnpj, nome, frete, R.endereco.rua, R.telefones, pratos FROM tb_restaurante R;
+SELECT cnpj, nome, frete, R.endereco.rua, T.*, P.* FROM tb_restaurante R, TABLE(pratos) P, TABLE(R.telefones) T;
 /
 ----- CONSULTA PRIMÁRIA CUPOM -----
 SELECT id, descricao, desconto, CP.cliente.cpf AS Cliente FROM tb_cupom CP;
@@ -27,7 +27,7 @@ SELECT PC.contratante.nome AS contratante, PC.contratado.nome AS Contratado FROM
 
 ----- CONSULTA A VARRAY ------
 ----- VARRAY: COLEÇÃO ORDENADA (IN LINE) DE UMA QUANTIDADE FIXA DE ELEMENTOS -----
-SELECT R.cnpj, R.nome, R.frete, R.endereco.rua, T.*
+SELECT cnpj, nome, frete, R.endereco.rua, T.*
 FROM tb_restaurante R, TABLE(R.telefones) T;
 /
 ----- CONSULTA A NESTED TABLE -----
