@@ -82,5 +82,6 @@ BEGIN
                     || TO_CHAR(cupom1.id) || ' tem desconto de ' || TO_CHAR(cupom1.desconto) || ' reais.');
     ELSE
         DBMS_OUTPUT.PUT_LINE('Ambos possuem o mesmo desconto.');
+        DBMS_OUTPUT.PUT_LINE('O desconto é de: ' || TO_CHAR(cupom1.desconto) || ' reais');
     END IF;
 END;
