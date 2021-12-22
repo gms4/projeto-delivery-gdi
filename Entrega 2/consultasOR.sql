@@ -11,6 +11,7 @@ SELECT cnpj, nome, frete, R.endereco.rua, R.telefones, pratos FROM tb_restaurant
 SELECT id, descricao, desconto, CP.cliente.cpf AS Cliente FROM tb_cupom CP;
 /
 ----- CONSULTA PRIMÁRIA PEDIDO -----
+----- DEREF: RETORNA UM OBJETO REFERENCIADO POR UMA COLUNA DO TIPO REF -----
 SELECT DEREF(P.cliente).cpf, DEREF(P.restaurante).cnpj, data_pedido, DEREF(P.cupom).desconto, DEREF(P.entregador).cpf, inicio, fim, pagamento, notas FROM tb_pedido P;
 SELECT P.cliente.cpf AS cliente, P.restaurante.cnpj AS restaurante, data_pedido, P.cupom.desconto AS desconto, P.entregador.cpf AS entregador, inicio, fim, pagamento, N.* FROM tb_pedido P, TABLE(P.notas) N;
 /
@@ -25,10 +26,12 @@ SELECT PC.contratante.nome AS contratante, PC.contratado.nome AS Contratado FROM
 ----- OUTRAS CONSULTAS ------
 
 ----- CONSULTA A VARRAY ------
+----- VARRAY: COLEÇÃO ORDENADA (IN LINE) DE UMA QUANTIDADE FIXA DE ELEMENTOS -----
 SELECT R.cnpj, R.nome, R.frete, R.endereco.rua, T.*
 FROM tb_restaurante R, TABLE(R.telefones) T;
 /
 ----- CONSULTA A NESTED TABLE -----
+----- NESTED TABLE: COLEÇÃO NÃO ORDENADA (OUT LINE) DE UMA QUANTIDADE ARBITRÁRIA DE ELEMENTOS -----
 SELECT * FROM TABLE(SELECT R.pratos FROM tb_restaurante R WHERE R.cnpj = '90');
 SELECT * FROM TABLE(SELECT R.pratos FROM tb_restaurante R WHERE R.cnpj = '91');
 SELECT * FROM TABLE(SELECT R.pratos FROM tb_restaurante R WHERE R.cnpj = '92');
@@ -37,6 +40,7 @@ SELECT * FROM TABLE(SELECT R.pratos FROM tb_restaurante R WHERE R.cnpj = '92');
 SELECT E.renda_anual() FROM tb_entregador E WHERE E.cpf = '4';
 /
 ----- MEMBER PROCEDURE e VALUE -----
+----- VALUE: EXIBE OS DADOS DAS INSTÂNCIAS DO OBJETO -----
 DECLARE
     entregador tp_entregador;
 BEGIN

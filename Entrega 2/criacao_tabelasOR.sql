@@ -33,7 +33,7 @@ CREATE TABLE tb_restaurante OF tp_restaurante (
 CREATE TABLE tb_cupom OF tp_cupom (
 
     id PRIMARY KEY,
-    cliente SCOPE IS tb_cliente,
+    cliente SCOPE IS tb_cliente, -- RESTRINGE O ESCOPO DE REFERÊNCIAS PARA UMA ÚNICA TABELA --
     descricao NOT NULL
 
 );
@@ -47,6 +47,8 @@ CREATE TABLE tb_parceria OF tp_parceria (
 
 /
 
+-- ROWID: IMPORTA O OID E A IDENTIFICAÇÃO FISICA DA LINHA ONDE O OBJETO ESTÁ ARMAZENADO --
+-- MANTÉM ACESSO DIRETO --
 CREATE TABLE tb_pedido OF tp_pedido (
 
     cliente WITH ROWID REFERENCES tb_cliente NOT NULL,

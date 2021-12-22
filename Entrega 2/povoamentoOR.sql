@@ -1,5 +1,7 @@
+----- SETANDO O HORÁRIO CORRETINHO -----
 ALTER SESSION SET NLS_TIMESTAMP_FORMAT='DD-MON-YY HH24:MI';
 /
+----- CRIANDO SEQUÊNCIA PRA ID DE CUPOM -----
 CREATE SEQUENCE id INCREMENT by 1 START WITH 1;
 /
 ----- POVOAMENTO CLIENTE -----
@@ -59,8 +61,6 @@ INSERT INTO tb_cliente VALUES (
         to_date('11/08/2019', 'dd/mm;yy') 
         ) 
     );
-/
-SELECT nome, cpf, email, C.endereco.rua FROM tb_cliente C;
 /
 ----- POVOAMENTO ENTREGADOR -----
 INSERT INTO tb_entregador VALUES (
@@ -125,8 +125,6 @@ INSERT INTO tb_entregador VALUES (
         'moto'
         )
 );
-/
-SELECT nome, cpf, email, renda, veiculo, E.endereco.rua FROM tb_entregador E;
 /
 ----- POVOAMENTO RESTAURANTE -----
 INSERT INTO tb_restaurante VALUES (
@@ -193,8 +191,6 @@ INSERT INTO TABLE(SELECT R.pratos FROM tb_restaurante R WHERE R.cnpj = '91')
 INSERT INTO TABLE(SELECT R.pratos FROM tb_restaurante R WHERE R.cnpj = '92')
     VALUES (tp_prato('kibe de carne de sol (8 unidades)', 24, 'petiscos', 331));
 /
-SELECT cnpj, nome, frete, R.endereco.rua, R.telefones, pratos FROM tb_restaurante R;
-/
 ----- POVOAMENTO CUPOM -----
 INSERT INTO tb_cupom VALUES (
     tp_cupom(
@@ -222,8 +218,6 @@ INSERT INTO tb_cupom VALUES (
         5
     
 );
-/
-SELECT id, descricao, desconto, DEREF(CP.cliente).cpf FROM tb_cupom CP;
 /
 ----- POVOAMENTO PEDIDO -----
 INSERT INTO tb_pedido VALUES (
@@ -283,10 +277,7 @@ INSERT INTO tb_pedido VALUES (
     )
 );
 /
-SELECT DEREF(P.cliente).cpf, DEREF(P.restaurante).cnpj, data_pedido, DEREF(P.cupom).desconto, DEREF(P.entregador).cpf, inicio, fim, pagamento, notas FROM tb_pedido P;
-/
-
------ POVOAMENTO DETALHAMENTO (RESOLVER) -----
+----- POVOAMENTO DETALHAMENTO -----
 INSERT INTO  tb_detalhamento VALUES (
     tp_detalhamento(
         (SELECT REF(P) FROM tb_pedido P WHERE P.data_pedido = '01-JAN-2020 17:00'),
@@ -335,8 +326,6 @@ INSERT INTO tb_parceria VALUES (
         (SELECT REF(R) FROM tb_restaurante R WHERE R.nome = 'bode do nô')
     )
 );
-/
-SELECT DEREF(PC.contratante).nome, (PC.contratado).nome FROM tb_parceria PC;
 /
 
 
